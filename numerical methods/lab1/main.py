@@ -27,7 +27,13 @@ def main():
             case '1':
                 pass #TODO вставте свої точки входа сюда з імпортом
             case '2':
-                pass #TODO вставте свої точки входа сюда з імпортом
+                import chord
+                do_test = input("\n\nвикликати функцію перевірки ? (t/f)\n--->")
+                if do_test == 'f':
+                    print(chord.run_first_func())
+                else:
+                    print(chord.run_with_test())
+                _ = input()
             case '3':
                 import newton
                 do_test = input("\n\nвикликати функцію перевірки ? (t/f)\n--->")
