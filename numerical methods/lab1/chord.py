@@ -56,7 +56,7 @@ def calc(f, d2f, a, b, eps=0.001):
 
 def run_first_func():
     """Запуск методу хорд для алгебраїчного рівняння"""
-    a, b = -0.1, 0  # Межі ізоляції з equations.py
+    a, b = -2, -1
     try:
         root, iters, errors = calc(f_alg, d2f_alg, a, b, eps=0.001)
         res = f"\n[Метод хорд] Алгебраїчне рівняння:\n"
@@ -69,7 +69,7 @@ def run_first_func():
 
 def run_with_test():
     """Запуск для трансцендентного рівняння та перевірка через SciPy"""
-    a, b = 1, 2  # Межі ізоляції з equations.py
+    a, b = 1, 2
     eps = 0.001
 
     try:

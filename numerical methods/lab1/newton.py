@@ -10,6 +10,8 @@ newton.py
 
     Загаєвський
 """
+from equations import f_alg, df_alg, d2f_alg
+
 
 # TODO використовувати лямбди з equations.py
 
@@ -49,26 +51,19 @@ def calc(f, df, d2f, a, b, eps=0.001) :
     return x_curr, iterations
 
 def run_first_func():
-    """функция запуска метода нютона за першою формулою сьомого варіанту """
-    f1 = lambda x: 8 * x ** 4 - 8 * x ** 2 + 32 * x + 1
-    df1 = lambda x: 32 * x ** 3 - 16 * x + 32
-    d2f1 = lambda x: 96 * x ** 2 - 16
-    a1, b1 = -0.1, 0
+
+    a1, b1 = -2, -1
     try:
-        root1, iters1 = calc(f1, df1, d2f1, a1, b1, eps=0.001)
+        root1, iters1 = calc(f_alg, df_alg, d2f_alg, a1, b1, eps=0.001)
         print(f"Корінь: {root1:.5f} (знайдено за {iters1} ітерацій)")
         return root1, iters1
     except Exception as ex: print(ex)
 
 def run_with_test():
-    """для теста правильності написання перевірямо з еталоном"""
     from scipy.optimize import newton
 
-    f1 = lambda x: 8 * x ** 4 - 8 * x ** 2 + 32 * x + 1
-
-    scipy_root1 = newton(f1, x0=-0.5)
+    scipy_root1 = newton(f_alg, x0=-1.5)
     print(f"Корінь через SciPy: {scipy_root1:.5f}")
-    print(f"Різниця між методами: {abs(run_first_func()[0] - scipy_root1)}")
 
 if __name__ == '__main__':
     run_with_test()

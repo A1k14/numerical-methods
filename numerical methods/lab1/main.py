@@ -9,6 +9,7 @@ main.py
 
 
 """
+from bisection import run_bisection
 
 EPSILON = 0.001  # Задана точність
 
@@ -25,7 +26,9 @@ def main():
         numberr = input("---->")
         match numberr:
             case '1':
-                pass #TODO вставте свої точки входа сюда з імпортом
+                import bisection
+                run_bisection()
+                pass
             case '2':
                 import chord
                 do_test = input("\n\nвикликати функцію перевірки ? (t/f)\n--->")
@@ -41,7 +44,9 @@ def main():
                 else: print(newton.run_with_test())
                 _ = input()
             case '4':
-                pass #TODO вставте свої точки входа сюда з імпортом
+                import simple_iteration
+
+                pass
             case _:
                 print("байбай")
                 return 0

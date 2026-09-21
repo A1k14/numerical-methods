@@ -9,7 +9,7 @@ def simple_iteration(phi_func, x0: float, eps: float):
     """
     x_prev = x0
     iters = 0
-    max_iters = 1000  # Запобіжник від нескінченного циклу
+    max_iters = 1000
 
     while iters < max_iters:
         # 1. Знаходимо нове значення x
@@ -23,7 +23,6 @@ def simple_iteration(phi_func, x0: float, eps: float):
         # 3. Якщо ні, рухаємось далі (новий ікс стає старим)
         x_prev = x_next
         
-    # Якщо цикл дійшов до 1000 ітерацій і не знайшов корінь
     raise RuntimeError("Метод простої ітерації не зійшовся за 1000 ітерацій")
 
 def check_simple_iteration_scipy(phi_func, x0: float, eps: float):
@@ -34,15 +33,14 @@ def check_simple_iteration_scipy(phi_func, x0: float, eps: float):
 
 
 
-# БЛОК ДЛЯ ПЕРЕВІРКИ ТВОГО КОДУ
 
 if __name__ == "__main__":
     from equations import phi_alg, phi_trans
-    
+
     EPSILON = 0.001
     
     print("АЛГЕБРАЇЧНЕ РІВНЯННЯ")
-    x0_alg = -0.5  # Стартуємо посередині відрізка [-1, 0]
+    x0_alg = -1.5  # Стартуємо посередині відрізка [-1, 0]
     
     root_alg, iters_alg = simple_iteration(phi_alg, x0_alg, EPSILON)
     scipy_root_alg = check_simple_iteration_scipy(phi_alg, x0_alg, EPSILON)
