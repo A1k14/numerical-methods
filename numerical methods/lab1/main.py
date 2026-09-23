@@ -9,47 +9,43 @@ main.py
 
 
 """
-from bisection import run_bisection
+import numpy as np
+import matplotlib.pyplot as plt
 
-EPSILON = 0.001  # Задана точність
+# Імпортуємо 4 різні файли з їхніми методами
+from bisection import run_bisection
+from equations import f_alg, df_alg, d2f_alg
+from newton import run_newton  # Файл 3
 
 
 def main():
-    print("\n\nПрогрма для запуска потрібного режиму виберіть його зі списку на напишіть потрібний номер")
-    print("\n  1. Метод дихотомії    (bisection.py)\n  2. Метод хорд         (chord.py)\n  3. Метод Ньютона      (newton.py)\n  4. Проста ітерація    (simple_iteration.py)\n\n  0. вихід\n")
+    print("Оберіть рівняння для розрахунку 4 методами:")
 
+    f, root_bisect, hist_bisect, title = run_bisection()
 
-    while True:
-        print("\n\nПрогрма для запуска потрібного режиму виберіть його зі списку на напишіть потрібний номер")
-        print(
-            "\n  1. Метод дихотомії    (bisection.py)\n  2. Метод хорд         (chord.py)\n  3. Метод Ньютона      (newton.py)\n  4. Проста ітерація    (simple_iteration.py)\n\n  0. вихід\n")
-        numberr = input("---->")
-        match numberr:
-            case '1':
-                import bisection
-                run_bisection()
-                pass
-            case '2':
-                import chord
-                do_test = input("\n\nвикликати функцію перевірки ? (t/f)\n--->")
-                if do_test == 'f':
-                    print(chord.run_first_func())
-                else:
-                    print(chord.run_with_test())
-                _ = input()
-            case '3':
-                import newton
-                do_test = input("\n\nвикликати функцію перевірки ? (t/f)\n--->")
-                if do_test == 'f':print(newton.run_first_func())
-                else: print(newton.run_with_test())
-                _ = input()
-            case '4':
-                import simple_iteration
+    # 2. Запускаємо інші 3 методи з відповідних файлів 
+    root_newton, hist_newton = run_newton(f_alg, df_alg, d2f_alg, a=-2, b=-1)
+    plt.figure(figsize=(9, 5))
 
-                pass
-            case _:
-                print("байбай")
-                return 0
+    methods = {
+        "Ділення навпіл": (hist_bisect, 'bo-'),
+        "Метод Ньютона": (hist_newton, 'g^-.'),
+    }
+
+    for name, (history, fmt) in methods.items():
+        fc_vals = [fc for _, fc in history]
+        n_vals = np.arange(1, len(fc_vals) + 1)
+        log_res = [np.log10(abs(fc)) if abs(fc) > 0 else -16 for fc in fc_vals]
+
+        plt.plot(n_vals, log_res, fmt, label=name)
+
+    plt.title(f"Порівняння 4 методів | {title}")
+    plt.xlabel('Номер ітерації (n)')
+    plt.ylabel(r'$\log_{10}|f(x_n)|$')
+    plt.grid(True, linestyle=':')
+    plt.legend()
+    plt.show()
+
 
 if __name__ == "__main__":
     main()
